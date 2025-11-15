@@ -1,7 +1,7 @@
 [
   {
     "text": "Blog",
-    "link": "/blogs/",
-    "activeMatch": "/blogs/"
+    "link": "/blog/",
+    "activeMatch": "/blog/"
   }
 ]
