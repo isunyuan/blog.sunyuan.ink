@@ -1,184 +1,29 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--background: #ffffff;
+	--foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
 }
 
-/* ========== 1. 全局重置 + H5移动端适配初始化 ========== */
-/* 移动端viewport配合，禁止默认缩放 */
 html {
-  /* 基准字号，rem换算基准 1rem=16px */
-  font-size: 100%;
-  -webkit-text-size-adjust: 100%; /* IOS禁止字体自动缩放 */
-  -ms-text-size-adjust: 100%;
-  box-sizing: border-box;
-  scroll-behavior: smooth; /* 平滑滚动 博客锚点优化 */
-}
-*, *::before, *::after {
-  box-sizing: inherit; /* 全局继承盒模型，统一border-box */
-  margin: 0;
-  padding: 0;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
 }
 
 body {
-  /* 博客通用无衬线字体，移动端优先系统原生字体 */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1.7; /* 博客正文舒适行高 */
-  color: #333;
-  background-color: #fff;
-  /* 移动端去除默认滚动条留白 */
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* ========== 2. 标签默认样式重置（博客常用H5标签） ========== */
-/* 超链接：去除下划线，博客正文链接优化 */
-a {
-  text-decoration: none;
-  color: #2563eb;
-  transition: color 0.2s ease;
-}
-a:hover {
-  color: #1d4ed8;
-  text-decoration: underline;
-}
-a:focus {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
-}
-
-/* 标题h1~h6 博客文章标题层级 */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 0.8rem;
-  color: #111;
-}
-h1 { font-size: clamp(1.8rem,5vw,2.8rem); } /* 动态字号：手机小、PC大 */
-h2 { font-size: clamp(1.5rem,4vw,2.2rem); }
-h3 { font-size: clamp(1.3rem,3vw,1.8rem); }
-h4 { font-size: clamp(1.1rem,2.5vw,1.4rem); }
-h5 { font-size: 1rem; }
-h6 { font-size: 0.9rem; color:#444; }
-
-/* 段落 博客正文 */
-p {
-  margin-bottom: 1rem;
-}
-
-/* 列表：文章目录、侧边栏分类 */
-ul, ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-}
-li {
-  margin-bottom: 0.4rem;
-}
-
-/* 引用块 博客markdown引用 */
-blockquote {
-  border-left: 4px solid #cbd5e1;
-  padding: 0.8rem 1rem;
-  margin: 1rem 0;
-  background-color: #f8fafc;
-  color: #555;
-}
-
-/* 图片：H5博客图片自适应（关键！手机图片不会溢出屏幕） */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  /* 防止图片底部留白 */
-  vertical-align: middle;
-}
-
-/* 代码标签 博客代码片段 */
-code, pre {
-  font-family: "Consolas", "Monaco", monospace;
-  background-color: #f1f5f9;
-  border-radius: 4px;
-}
-code {
-  padding: 0.15rem 0.4rem;
-  font-size: 0.9em;
-}
-pre {
-  padding: 1rem;
-  overflow-x: auto; /* 代码横向滚动（手机小屏） */
-  margin: 1rem 0;
-}
-
-/* 分割线 */
-hr {
-  border: none;
-  height: 1px;
-  background-color: #e5e7eb;
-  margin: 1.5rem 0;
-}
-
-/* 表单控件：评论框、搜索框 */
-input, textarea, button, select {
-  font-family: inherit;
-  font-size: inherit;
-}
-button {
-  cursor: pointer;
-  border: none;
-}
-textarea {
-  resize: vertical; /* 仅允许垂直拉伸，移动端友好 */
-}
-
-/* ========== 3. 博客通用工具类（直接在class使用） ========== */
-/* 容器类：文章内容容器，自动左右留白（手机左右边距，PC居中定宽） */
-.container {
-  width: 100%;
-  padding-inline: 1rem; /* 左右内边距 移动端左右留白 */
-  max-width: 720px; /* 博客正文最佳阅读宽度，PC端不无限拉宽 */
-  margin: 0 auto;
-}
-
-/* 清除浮动 */
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* 隐藏元素 */
-.hidden { display: none !important; }
-
-/* 移动端独占/PC独占（媒体查询） */
-@media (max-width:767px) {
-  .hide-mobile { display: none !important; }
-}
-@media (min-width:768px) {
-  .hide-pc { display: none !important; }
-}
-
-/* ========== 4. 媒体查询：大屏PC端优化（768px为手机/平板分界） ========== */
-@media screen and (min-width:768px) {
-  body {
-    font-size: 1.05rem;
-  }
-  .container {
-    padding-inline: 1.5rem;
-  }
+	line-height: 1.7;
+	color: #333;
+	background-color: #fff;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
 }
